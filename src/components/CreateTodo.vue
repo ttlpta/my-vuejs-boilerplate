@@ -11,7 +11,7 @@
             <input v-model="titleText" type='text' ref='title' defaultValue="">
           </div>
           <div class='field'>
-            <label>Project {{titleText}} {{reversedTitle}}</label>
+            <label>Project {{reversedTitle}}</label>
             <input v-model="projectText" type='text' ref='project' defaultValue="">
           </div>
           <div class='ui two button attached buttons'>
@@ -48,15 +48,15 @@ export default {
       if (this.titleText.length > 0 && this.projectText.length > 0) {
         const title = this.titleText;
         const project = this.projectText;
-        this.$emit('create-todo', {
+        this.$store.dispatch('add', {
           title,
           project,
           done: false,
-        });
+        })
         this.titleText = '';
         this.projectText = '';
       }
-      // this.isCreating = false;
+      this.isCreating = false;
     },
   },
   computed : {

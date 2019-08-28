@@ -11,7 +11,7 @@
         <span class='right floated edit icon' v-on:click="showForm">
           <i class='edit icon'></i>
         </span>
-        <span class='right floated trash icon' v-on:click="deleteTodo(todo)">
+        <span class='right floated trash icon' v-on:click="deleteTodo(todo.id)">
           <i class='trash icon'></i>
         </span>
       </div>
@@ -20,11 +20,11 @@
       <div class='ui form'>
         <div class='field'>
           <label>Title</label>
-          <input type='text' v-model="todo.title" >
+          <input type='text' v-model="todo.title" v-on:change="onChange">
         </div>
         <div class='field'>
           <label>Project</label>
-          <input type='text' v-model="todo.project" >
+          <input type='text' v-model="todo.project" v-on:change="onChange">
         </div>
         <div class='ui two button attached buttons'>
           <button class='ui basic blue button' v-on:click="hideForm">
@@ -36,7 +36,7 @@
     <div class='ui bottom attached green basic button' v-show="!isEditing &&todo.done" disabled >
         Completed
     </div>
-    <div class='ui bottom attached red basic button' v-show="!isEditing && !todo.done" v-on:click="complete(todo)">
+    <div class='ui bottom attached red basic button' v-show="!isEditing && !todo.done" v-on:click="complete(todo.id)">
         Pending
     </div>
   </div>
@@ -52,16 +52,23 @@
     },
     methods: {
         showForm() {
-            this.isEditing = true;
+          this.isEditing = true;
+        },
+        onChange() {
+          this.updateTodo()
+        },
+        updateTodo() {
+          this.$store.dispatch('edit', this.todo)
         },
         hideForm() {
             this.isEditing = false;
         },
-        deleteTodo(todo) {
-          this.$emit('delete-todorrrrr', todo);
+        deleteTodo(id) {
+          const yes = confirm('Are U sure?');
+          if(yes) this.$store.dispatch('delete', id)
         },
-        complete(todo){
-          this.$emit('complete-todorrrrr', todo);
+        complete(id){
+          this.$store.dispatch('complete', id)
         }
     },
   };
