@@ -1,5 +1,13 @@
 <template>
     <div>
+        <hello-world>
+            <template #header>
+                <h1>Header <span>ABC</span></h1>
+            </template>
+            <template #footer>
+                <h1>Footer</h1>
+            </template>
+        </hello-world>
         <div class='ui basic content center aligned segment'>
             <router-link to="/add">
                 <button class='ui basic button icon'>
@@ -15,19 +23,20 @@
     </div>
 </template>
 <script type = "text/javascript" >
-import Todo from './Todo';
-export default {
-    components: {
-        Todo,
-    },
-    computed: {
-        todos() {
-            return this.$store.getters.TODOS
-        }
-    },
-    methods: {
-    },
-};
+    import HelloWorld from "./HelloWorld";
+    import Todo from './Todo';
+    export default {
+        components: {
+            Todo, HelloWorld
+        },
+        computed: {
+            todos() {
+                return this.$store.getters.TODOS
+            }
+        },
+        methods: {
+        },
+    };
 </script>
 <style>
     .todolist-container {
